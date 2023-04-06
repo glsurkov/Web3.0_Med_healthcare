@@ -1,0 +1,16 @@
+@import "variables";
+
+.add-form{
+  height: 270px;
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-radius: 5px;
+  background-color: $addButtonTheme;
+  padding: 15px;
+
+  &--active{
+    display: flex;
+  }
+}

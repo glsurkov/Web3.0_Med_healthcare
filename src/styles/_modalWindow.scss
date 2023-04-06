@@ -1,0 +1,29 @@
+@import "variables";
+
+.modal-window{
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  z-index: 10;
+  display: none;
+  background-color: rgba(0,0,0,0.3);
+
+  &--active{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__content{
+    width: 60%;
+    min-height: 80%;
+    max-height: 95vh;
+    background-color: $white;
+    border-radius: 10px;
+    padding: 20px;
+    padding-inline: 40px;
+    overflow: auto;
+  }
+}

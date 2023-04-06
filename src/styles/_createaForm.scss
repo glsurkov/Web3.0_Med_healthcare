@@ -1,0 +1,99 @@
+.container{
+  width: 190px;
+  position: relative;
+}
+
+.cs-selector {
+  --selectedBackground: #7a8eff;
+  --selectedColor: #FFF;
+  min-width: 190px;
+  background: #FFF;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.cs-selector[data-selected="USER"] .cs-options-list .cs-option:nth-child(2) {
+  background: var(--selectedBackground);
+  color: var(--selectedColor);
+}
+.cs-selector[data-selected="DOCTOR"] .cs-options-list .cs-option:nth-child(3) {
+  background: var(--selectedBackground);
+  color: var(--selectedColor);
+}
+.cs-selector-icon {
+  transition: 0.3s cubic-bezier(0.9, -0.6, 0.3, 1.6) 0.1s;
+}
+.cs-selector[data-active="USER"] .cs-selector-icon {
+  transform: rotateZ(180deg);
+}
+.cs-selector[data-active="USER"] .cs-options-list {
+  display: block;
+  -webkit-animation: fadeIn;
+  animation: fadeIn;
+}
+.cs-selector[data-active="0"] .cs-options-list, .cs-selector select {
+  display: none;
+}
+.cs-selector .cs-selected-box {
+  padding: 0.8em 1.2em;
+  background: #FFF;
+  color: #595959;
+  border-radius: 5px;
+  border: 0.5px solid #bfbfbf;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  outline:none;
+}
+.cs-selector .cs-selector-icon {
+  width: 20px;
+  height: 20px;
+}
+.cs-selector .cs-selector-icon svg {
+  width: 100%;
+  height: auto;
+  stroke: #565656;
+  stroke-width: 1px;
+}
+.cs-selector .cs-options-list {
+  border: 0.5px solid #bfbfbf;
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+  position: absolute;
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.cs-selector .cs-selector-label {
+  display: none;
+}
+.cs-selector .cs-option {
+  background-color: white;
+  color: #595959;
+  padding: 0.9em 1.3em;
+  transition: 0.2s ease;
+  font-weight: 400;
+}
+.cs-selector .cs-option:not(:last-child) {
+  border-bottom: 0;
+}
+
+.create-form{
+  width: 57%;
+  height: 270px;
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-radius: 5px;
+  background-color: $darkBlueTheme;
+  padding: 15px;
+
+  &--active{
+    display: flex;
+  }
+}

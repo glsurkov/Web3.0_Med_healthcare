@@ -1,0 +1,20 @@
+@import "variables";
+
+
+.patient-mini-card{
+  display: flex;
+  background-color:$darkBlueTheme;
+  border-radius: 50px;
+  height: 20%;
+  align-items: center;
+  color: $white;
+  text-decoration: none;
+
+  &--margin10p{
+    margin-block-start: 10px;
+  }
+
+  &:nth-child(1){
+    margin: 0;
+  }
+}

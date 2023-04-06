@@ -1,0 +1,22 @@
+*{
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.header__container,section, footer, main{
+  padding-inline: 8%;
+}
+
+@import "~normalize.css";
+@import "generalStyles.scss";
+@import "mainpage.scss";
+@import "patients.scss";
+@import "mycard.scss";
+@import "patientMiniCard.scss";
+@import "avatar.scss";
+@import "modalWindow.scss";
+@import "input.scss";
+@import "illnessCard.scss";
+@import "customButton.scss";
+@import "add-form.scss";
+@import "createaForm";

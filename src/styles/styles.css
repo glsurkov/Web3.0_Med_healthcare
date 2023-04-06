@@ -1,0 +1,517 @@
+@charset "UTF-8";
+@import "~normalize.css";
+* {
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+.header__container, section, footer, main {
+  padding-inline: 8%;
+}
+
+.menu {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  background-color: #defaf9;
+  padding-block-start: 15px;
+  padding-inline: 12%;
+}
+
+.header__container, section, footer {
+  padding-inline: 12%;
+}
+
+.header {
+  width: 100%;
+  color: #25295e;
+  text-transform: uppercase;
+}
+.header__container {
+  padding-block: 1%;
+  width: 100%;
+  display: flex;
+  background-color: #130d4a;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nav-bar {
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+}
+
+nav {
+  text-decoration: none;
+}
+
+.link {
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.link:after, .link:before {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #FFF;
+  content: "";
+  opacity: 0;
+  transition: all 0.3s;
+}
+.link:after {
+  bottom: -3px;
+  transform: translateY(4px);
+}
+.link:before {
+  top: -3px;
+  transform: translateY(-4px);
+}
+.link:hover:before, .link:hover:after {
+  opacity: 1;
+  transform: translateY(0px);
+}
+.link:hover {
+  opacity: 0.7;
+  transition: 0.3s linear;
+  transform: scale(1.05);
+}
+.link:visited {
+  color: white;
+}
+@keyframes activateLink {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.link:active {
+  animation: activateLink 0.5s 1;
+  animation-fill-mode: forwards;
+}
+
+.logo {
+  width: 6%;
+}
+.logo__image {
+  width: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.authentification {
+  position: relative;
+  background-image: url("../images/Modern_medicine.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: calc(100vh - 90.59px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.authentification::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(19, 13, 74, 0.6);
+}
+.authentification__wrapper {
+  display: block;
+}
+.authentification__button {
+  position: relative;
+  background-color: #130d4a;
+  color: white;
+  text-transform: uppercase;
+  width: 15vw;
+  min-height: 50px;
+  height: 8vh;
+  border-color: white;
+  border-radius: 15px;
+}
+.authentification__button:hover {
+  transition: 0.33s linear;
+  transform: scale(1.07);
+}
+
+.footer {
+  background-color: #130d4a;
+  color: white;
+  height: 18vh;
+}
+
+.back {
+  display: block;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-color: white;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 5px;
+  color: white;
+}
+.back:before {
+  content: "🠔";
+}
+
+.patient-info {
+  min-height: calc(100vh - 20px);
+  background-color: #130d4a;
+  border-radius: 30px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+}
+.patient-info__field {
+  height: 10%;
+  color: white;
+}
+.patient-info__field--click {
+  cursor: pointer;
+}
+.patient-info__field--click:hover {
+  animation: 0.7s forwards scaleText;
+  display: inline-block;
+}
+@keyframes scaleText {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.3);
+  }
+}
+.patient-info__field--color {
+  color: #defaf9;
+}
+
+.patient-mini-card {
+  display: flex;
+  background-color: #130d4a;
+  border-radius: 50px;
+  height: 20%;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+}
+.patient-mini-card--margin10p {
+  margin-block-start: 10px;
+}
+.patient-mini-card:nth-child(1) {
+  margin: 0;
+}
+
+.avatar-container {
+  width: 190px;
+  height: 190px;
+  min-width: 150px;
+  min-height: 150px;
+  position: relative;
+  margin: auto;
+}
+
+.avatar {
+  margin: auto;
+  background-color: white;
+  display: block;
+  object-fit: cover;
+  object-position: 50% 10%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px white solid;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.modal-window {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  z-index: 10;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.modal-window--active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-window__content {
+  width: 60%;
+  min-height: 80%;
+  max-height: 95vh;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  padding-inline: 40px;
+  overflow: auto;
+}
+
+#med-history-file {
+  display: none;
+}
+
+.input-text {
+  display: block;
+  outline: none;
+  min-width: 500px;
+  border: 2px solid white;
+}
+.input-text--whiteBack {
+  background-color: white;
+}
+.input-text--greenBack {
+  background-color: #e6faf0;
+}
+.input-text--margin-bottom {
+  margin-bottom: 10px;
+}
+
+.input-description {
+  height: 120px;
+  max-width: 700px;
+  resize: none;
+}
+
+.file-input {
+  box-sizing: border-box;
+  display: flex;
+  position: relative;
+  align-items: center;
+  align-content: flex-start;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #130d4a;
+}
+.file-input::after {
+  margin-left: 7px;
+  font-size: 0.9rem;
+  content: "Upload";
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border: 2px solid #130d4a;
+  background-color: white;
+  height: 25px;
+  width: 80px;
+  border-radius: 3px;
+}
+@keyframes scales {
+  to {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+}
+.file-input:hover {
+  cursor: pointer;
+  animation: 0.1s linear forwards scales;
+}
+
+.illness-card {
+  border-radius: 47px 1px 352px 0px/47px 0px 0px 0px;
+  position: relative;
+  padding: 10px;
+  padding-inline: 20px;
+  color: #130d4a;
+  background-color: #defaf9;
+  margin-top: 10px;
+}
+.illness-card__image-container {
+  width: 175px;
+  height: 175px;
+}
+.illness-card__image {
+  border-radius: 87px 0px 352px 0px/77px 0px 0px 0px;
+  border: 4px solid white;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.full-picture {
+  width: 100%;
+  object-fit: contain;
+}
+.full-picture-container {
+  max-width: 700px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+.custom-button {
+  border-radius: 3px;
+  padding: 5px;
+  padding-inline: 12px;
+}
+.custom-button--green {
+  background-color: #34eb8f;
+}
+.custom-button--white {
+  background-color: white;
+}
+.custom-button--margin-top {
+  margin-top: 10px;
+}
+.custom-button--position-absolute {
+  position: absolute;
+  right: 15px;
+}
+.custom-button:hover {
+  animation: 0.3s forwards scaleText;
+  display: block;
+  cursor: pointer;
+}
+@keyframes scaleText {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.04);
+  }
+}
+
+.add-form {
+  height: 270px;
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-radius: 5px;
+  background-color: #34eb8f;
+  padding: 15px;
+}
+.add-form--active {
+  display: flex;
+}
+
+.container {
+  width: 190px;
+  position: relative;
+}
+
+.cs-selector {
+  --selectedBackground: #7a8eff;
+  --selectedColor: #FFF;
+  min-width: 190px;
+  background: #FFF;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.cs-selector[data-selected=USER] .cs-options-list .cs-option:nth-child(2) {
+  background: var(--selectedBackground);
+  color: var(--selectedColor);
+}
+
+.cs-selector[data-selected=DOCTOR] .cs-options-list .cs-option:nth-child(3) {
+  background: var(--selectedBackground);
+  color: var(--selectedColor);
+}
+
+.cs-selector-icon {
+  transition: 0.3s cubic-bezier(0.9, -0.6, 0.3, 1.6) 0.1s;
+}
+
+.cs-selector[data-active=USER] .cs-selector-icon {
+  transform: rotateZ(180deg);
+}
+
+.cs-selector[data-active=USER] .cs-options-list {
+  display: block;
+  -webkit-animation: fadeIn;
+  animation: fadeIn;
+}
+
+.cs-selector[data-active="0"] .cs-options-list, .cs-selector select {
+  display: none;
+}
+
+.cs-selector .cs-selected-box {
+  padding: 0.8em 1.2em;
+  background: #FFF;
+  color: #595959;
+  border-radius: 5px;
+  border: 0.5px solid #bfbfbf;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  outline: none;
+}
+
+.cs-selector .cs-selector-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.cs-selector .cs-selector-icon svg {
+  width: 100%;
+  height: auto;
+  stroke: #565656;
+  stroke-width: 1px;
+}
+
+.cs-selector .cs-options-list {
+  border: 0.5px solid #bfbfbf;
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+  position: absolute;
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.cs-selector .cs-selector-label {
+  display: none;
+}
+
+.cs-selector .cs-option {
+  background-color: white;
+  color: #595959;
+  padding: 0.9em 1.3em;
+  transition: 0.2s ease;
+  font-weight: 400;
+}
+
+.cs-selector .cs-option:not(:last-child) {
+  border-bottom: 0;
+}
+
+.create-form {
+  width: 57%;
+  height: 270px;
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-radius: 5px;
+  background-color: #130d4a;
+  padding: 15px;
+}
+.create-form--active {
+  display: flex;
+}
+
+/*# sourceMappingURL=styles.css.map */
