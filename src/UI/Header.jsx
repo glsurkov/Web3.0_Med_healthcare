@@ -5,7 +5,7 @@ import {AuthContext} from "../context";
 
 const Header = () => {
 
-    const {currentAccount} = useContext(AuthContext)
+    const {currentAccount,userRole} = useContext(AuthContext)
 
     return (
         <header className='header'>
@@ -15,7 +15,8 @@ const Header = () => {
                 </div>
                 <nav className='nav-bar'>
                     <Link className = 'link' to={"/card/" + currentAccount}><b>My Card</b></Link>
-                    <Link className = 'link' to="/patients"><b>Patients</b></Link>
+                    {userRole === "DOCTOR" ? <Link className = 'link' to="/patients"><b>Patients</b></Link> : null}
+                    <Link className = 'link' to="/doctors/"><b>Doctors</b></Link>
                     {/*<Link className = 'link' to='/schedule'><b>My schedule</b></Link>*/}
                 </nav>
             </div>

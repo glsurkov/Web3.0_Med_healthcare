@@ -8,10 +8,12 @@
   color: $darkBlueTheme;
   background-color:$lightBlueTheme;
   margin-top:10px;
+  box-sizing: border-box;
 
   &__image-container{
     width: 175px;
     height: 175px;
+    position: relative;
   }
 
   &__image{
@@ -21,11 +23,11 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    box-sizing: border-box;
   }
 }
 
 .full-picture{
-
   width: 100%;
   object-fit: contain;
 
@@ -34,4 +36,31 @@
     margin-inline-start: auto;
     margin-inline-end: auto;
   }
+}
+
+.cancel {
+  width: 0.8em;
+  height: 0.8em;
+  position: absolute;
+  font-weight: lighter;
+  font-size: 2em;
+  color: white;
+  background-color: palevioletred;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+}
+
+.cancel:after {
+  content: 'X';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%) scaleX(1.2);
+  transform: translate(-50%,-50%) scaleX(1.2);
+}
+
+.pictures-container{
+  margin-top: 10px;
+  display: flex;
 }

@@ -4,7 +4,19 @@
   height: 100vh;
   width: 100%;
   position: relative;
-  background-color: $lightBlueTheme;
+  z-index: 3;
+  background-color: transparent;
   padding-block-start: 15px ;
   padding-inline:12% ;
 }
+
+.menu-patients{
+  position: relative;
+  z-index: 3;
+  height: 100vh;
+  width:100%;
+  padding-inline: 20%;
+  padding-block-start: 15px ;
+  background-color: transparent;
+}
+

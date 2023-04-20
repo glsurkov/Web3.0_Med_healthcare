@@ -9,13 +9,81 @@
   padding-inline: 8%;
 }
 
+html {
+  background-color: black;
+}
+
+body, head {
+  display: block;
+  color: transparent;
+}
+
+head::before, head::after,
+body::before, body::after {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 3em;
+  height: 3em;
+  content: ".";
+  mix-blend-mode: screen;
+  animation: 44s -27s move infinite ease-in-out alternate;
+}
+
+body::before {
+  text-shadow: 7.3199888481em 1.3387972243em 3px #57a5ff, 2.3251995674em 1.842717643em 3px #57a5ff, 8.1372511061em 2.2376019412em 3px #57a5ff, 8.5990956926em -0.161540465em 3px #57a5ff, 9.480763666em 1.4835247645em 3px #57a5ff, 6.0595984274em 0.1996382074em 3px #57a5ff, 6.1511349727em -0.0360949926em 3px #57a5ff, 1.0090415991em 2.2041994552em 3px #57a5ff, 3.8548227612em -0.3593104483em 3px #57a5ff, 1.0994864945em 1.2088002671em 3px #57a5ff, -0.2045331984em -0.6294936715em 3px #57a5ff, 7.7348119664em 2.0478982935em 3px #57a5ff, 3.1863868131em 2.7713836475em 3px #57a5ff, 3.0678958628em 2.7485499052em 3px #57a5ff, 0.2001122053em 2.3727582366em 3px #57a5ff, 7.4291656179em 3.0974705444em 3px #57a5ff, 3.6455370038em 0.6687123089em 3px #57a5ff, 8.823943872em 1.8305252671em 3px #57a5ff, 6.1663457029em 0.4408015741em 3px #57a5ff, 3.6924544597em -0.5111738504em 3px #57a5ff, 8.2188432792em -0.6287601364em 3px #57a5ff, 3.6421567062em 3.1057353868em 3px #57a5ff, 9.649033241em 2.5278693418em 3px #57a5ff, 2.5727477495em 1.026310211em 3px #57a5ff, 0.0055466718em 0.8537595951em 3px #57a5ff, 7.8110688067em 0.5622570919em 3px #57a5ff, 2.8562707556em 2.6008894087em 3px #57a5ff, 8.9006449775em 0.3595037844em 3px #57a5ff, 9.0652573579em 3.1104187843em 3px #57a5ff, 0.3864250338em 0.7303187016em 3px #57a5ff, 1.7136481225em 0.2687592201em 3px #57a5ff, 1.0229920544em 2.7022072673em 3px #57a5ff, 4.6379354997em 1.4557732489em 3px #57a5ff, -0.1929393796em -0.0169137818em 3px #57a5ff, 2.4426474506em 1.9264604434em 3px #57a5ff, 9.0099045775em 0.224585576em 3px #57a5ff, 4.277171357em 1.1181220188em 3px #57a5ff, 7.7188736889em -0.3303812588em 3px #57a5ff, 6.8869521452em 2.137616961em 3px #57a5ff, 1.6260230063em 2.5426158401em 3px #57a5ff, 0.2198287383em 1.4811405595em 3px #57a5ff;
+  animation-duration: 44s;
+  animation-delay: -27s;
+}
+
+body::after {
+  text-shadow: 6.881403381em -0.0126609119em 3px #57a5ff, 4.2505248399em 2.0502078703em 3px #57a5ff, 7.8415856819em 0.703727639em 3px #57a5ff, 8.4105588209em 0.5554520805em 3px #57a5ff, 1.1913256864em -0.082705059em 3px #57a5ff, 1.2085257925em -0.0254260231em 3px #57a5ff, 4.5788028273em 2.5752044319em 3px #57a5ff, 7.4429979074em 3.0133722194em 3px #57a5ff, 5.1684801417em 1.2263659065em 3px #57a5ff, 8.3215748452em 3.246338347em 3px #57a5ff, 7.2207828017em 2.5513017283em 3px #57a5ff, 6.3450294596em 2.4051515279em 3px #57a5ff, 8.5050587663em 0.8430637433em 3px #57a5ff, 7.3027467895em 1.0234772708em 3px #57a5ff, 8.294587375em 3.0200218967em 3px #57a5ff, 0.0281727175em 1.1450615712em 3px #57a5ff, 4.506964423em 0.802751077em 3px #57a5ff, 1.9838749053em 1.2828692167em 3px #57a5ff, 8.188508006em 0.0606027555em 3px #57a5ff, 5.0404776814em 0.3792398398em 3px #57a5ff, 4.0107862957em -0.6330143053em 3px #57a5ff, 2.7077149296em 0.7555979178em 3px #57a5ff, 2.2212244008em 1.7103338865em 3px #57a5ff, 3.7128382875em 0.7168179749em 3px #57a5ff, 2.1787056604em -0.5500531087em 3px #57a5ff, 6.2633685836em 3.2687539928em 3px #57a5ff, 3.5742914291em 2.2150448586em 3px #57a5ff, 7.5628540829em 2.8584104367em 3px #57a5ff, 5.8107644001em -0.2097263442em 3px #57a5ff, 3.770657395em 2.6837798533em 3px #57a5ff, -0.0559610451em 1.0196505978em 3px #57a5ff, 3.4484696124em 2.8493539922em 3px #57a5ff, 1.8665067024em 0.3676176847em 3px #57a5ff, 1.7851567679em 0.0887898745em 3px #57a5ff, 4.2729749745em 2.0686362087em 3px #57a5ff, 2.1094199834em 2.3026413439em 3px #57a5ff, 2.2483664718em 2.5182718756em 3px #57a5ff, 2.8043955858em 1.562231384em 3px #57a5ff, 2.5528196678em -0.5084431486em 3px #57a5ff, 6.7641981886em 0.3872778837em 3px #57a5ff, 8.3273207405em 2.9960389423em 3px #57a5ff;
+  animation-duration: 43s;
+  animation-delay: -32s;
+}
+
+head::before {
+  text-shadow: 1.7588961338em 1.7197789711em 3px #57a5ff, 5.3288197564em 1.6351920242em 3px #57a5ff, 8.6287062943em 2.0923975447em 3px #57a5ff, 2.0077278454em 0.9845945762em 3px #57a5ff, 6.460495891em -0.4903514883em 3px #57a5ff, 8.8249719722em -0.2245070558em 3px #57a5ff, 2.4398010429em 0.8902339174em 3px #57a5ff, 8.8520807598em 2.9535036086em 3px #57a5ff, 6.743572328em 1.7091204548em 3px #57a5ff, 0.8126258318em 2.4781755932em 3px #57a5ff, 3.7489944105em 2.7126770322em 3px #57a5ff, 7.6238253417em 0.0638164169em 3px #57a5ff, 8.5234938488em 2.579512407em 3px #57a5ff, 4.1027033482em 1.3195184358em 3px #57a5ff, 5.9801603289em -0.1925684901em 3px #57a5ff, 4.0831323857em 1.7079245522em 3px #57a5ff, 5.8808412712em -0.6243183118em 3px #57a5ff, 4.061255119em 0.7778448155em 3px #57a5ff, 3.9117564142em 1.5172740561em 3px #57a5ff, 4.6295742439em 1.5932512184em 3px #57a5ff, 7.9058504173em 1.7401926342em 3px #57a5ff, 0.6319524183em 2.1611427488em 3px #57a5ff, 4.0405089521em -0.354765222em 3px #57a5ff, 1.1985625416em -0.2737342033em 3px #57a5ff, 7.469558411em 0.2882988387em 3px #57a5ff, 2.7251833277em 1.9587528439em 3px #57a5ff, 4.2097763286em 1.7160338714em 3px #57a5ff, 8.9148828609em 0.6807979396em 3px #57a5ff, 5.0024675885em 1.3931278953em 3px #57a5ff, 2.3238349144em 0.5385170639em 3px #57a5ff, 2.4993980598em 0.6993565168em 3px #57a5ff, 3.8723364076em 1.5751482182em 3px #57a5ff, 0.4040904897em 0.8209469251em 3px #57a5ff, 9.1488209612em 2.1205161769em 3px #57a5ff, 2.1580649385em 0.4927947696em 3px #57a5ff, 1.7245698161em -0.0047717437em 3px #57a5ff, 1.1722349965em 1.156709717em 3px #57a5ff, 5.888341142em 0.4803534687em 3px #57a5ff, 8.7665414835em 3.1000523162em 3px #57a5ff, 4.2920937444em 1.6514328315em 3px #57a5ff, 1.6399318954em 1.9451049123em 3px #57a5ff;
+  animation-duration: 42s;
+  animation-delay: -23s;
+}
+
+head::after {
+  text-shadow: 0.0465390387em -0.0843349796em 3px #57a5ff, 8.8852650261em 2.9512985936em 3px #57a5ff, 1.5087925611em -0.3090956351em 3px #57a5ff, 5.8749919195em 0.4170705565em 3px #57a5ff, 4.9484683656em -0.4532573661em 3px #57a5ff, 3.8462086313em 2.2069437383em 3px #57a5ff, 4.965988516em 2.2591238529em 3px #57a5ff, 1.665264128em 1.2225930947em 3px #57a5ff, 6.2828655742em 1.048237484em 3px #57a5ff, 7.8623746062em -0.5142744508em 3px #57a5ff, 8.0309126567em 1.3575115029em 3px #57a5ff, 6.0740670205em 1.8625345791em 3px #57a5ff, -0.1130702791em 2.3318409852em 3px #57a5ff, 7.724733121em 2.1519905692em 3px #57a5ff, 4.4753727522em 1.0195437601em 3px #57a5ff, 2.2274888637em 2.350908532em 3px #57a5ff, 8.9013483144em 1.3741418236em 3px #57a5ff, 4.7715898671em 0.5974340141em 3px #57a5ff, 5.117807514em 1.3027271986em 3px #57a5ff, 6.7904931384em -0.3067847377em 3px #57a5ff, 3.6422223357em 2.5591455827em 3px #57a5ff, 7.3838725097em 2.7671210233em 3px #57a5ff, 6.3664453781em 2.8418160369em 3px #57a5ff, 0.8988620027em 0.5241695864em 3px #57a5ff, 4.5088893658em 2.2800771471em 3px #57a5ff, 9.4699370968em 2.4729200179em 3px #57a5ff, 6.1720184572em 2.571497607em 3px #57a5ff, 7.3703008291em 1.3820162595em 3px #57a5ff, 4.2278241604em 2.8816865338em 3px #57a5ff, 6.1397849982em 1.7854482989em 3px #57a5ff, 1.2286303913em 3.0530237585em 3px #57a5ff, 8.7216937005em 2.4042241164em 3px #57a5ff, 3.8243258575em 1.1401998784em 3px #57a5ff, 4.8955480562em 0.0529104965em 3px #57a5ff, 8.5764135077em 1.4867124306em 3px #57a5ff, 5.2365465835em 2.9074981106em 3px #57a5ff, 8.2695239167em 3.2905999953em 3px #57a5ff, -0.01965535em 0.0368249137em 3px #57a5ff, 6.7865972221em 1.455809916em 3px #57a5ff, 2.6594033552em -0.2985570633em 3px #57a5ff, 5.3020258232em 0.3647300835em 3px #57a5ff;
+  animation-duration: 41s;
+  animation-delay: -19s;
+}
+
+@keyframes move {
+  from {
+    transform: rotate(0deg) scale(12) translateX(-20px);
+  }
+  to {
+    transform: rotate(360deg) scale(18) translateX(20px);
+  }
+}
+.App {
+  position: relative;
+}
+
 .menu {
   height: 100vh;
   width: 100%;
   position: relative;
-  background-color: #defaf9;
+  z-index: 3;
+  background-color: transparent;
   padding-block-start: 15px;
   padding-inline: 12%;
+}
+
+.menu-patients {
+  position: relative;
+  z-index: 3;
+  height: 100vh;
+  width: 100%;
+  padding-inline: 20%;
+  padding-block-start: 15px;
+  background-color: transparent;
 }
 
 .header__container, section, footer {
@@ -23,9 +91,11 @@
 }
 
 .header {
+  position: relative;
   width: 100%;
   color: #25295e;
   text-transform: uppercase;
+  z-index: 3;
 }
 .header__container {
   padding-block: 1%;
@@ -128,6 +198,7 @@ nav {
 }
 .authentification__button {
   position: relative;
+  z-index: 3;
   background-color: #130d4a;
   color: white;
   text-transform: uppercase;
@@ -167,7 +238,8 @@ nav {
 
 .patient-info {
   min-height: calc(100vh - 20px);
-  background-color: #130d4a;
+  border: 3px solid white;
+  background-color: rgba(19, 13, 74, 0.6);
   border-radius: 30px;
   padding: 30px;
   display: flex;
@@ -201,18 +273,36 @@ nav {
 
 .patient-mini-card {
   display: flex;
+  clip-path: polygon(4% 0%, 100% 0%, 100% 100%, 4% 100%, 0% 50%);
+  justify-content: space-between;
   background-color: #130d4a;
-  border-radius: 50px;
-  height: 20%;
+  height: 15%;
   align-items: center;
   color: white;
   text-decoration: none;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+}
+.patient-mini-card__text {
+  border-right: 2px solid white;
+  padding: 10px 0;
+  padding-right: 15px;
+}
+.patient-mini-card__content {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  list-style-type: none;
+  padding-inline: 0px;
+}
+.patient-mini-card__content-container {
+  width: 100%;
 }
 .patient-mini-card--margin10p {
-  margin-block-start: 10px;
+  margin-block-start: 25px;
 }
-.patient-mini-card:nth-child(1) {
-  margin: 0;
+.patient-mini-card:nth-child(3) {
+  margin-block-start: 10px;
 }
 
 .avatar-container {
@@ -254,17 +344,17 @@ nav {
   align-items: center;
 }
 .modal-window__content {
-  width: 60%;
+  max-width: 95%;
+  min-width: 60%;
   min-height: 80%;
   max-height: 95vh;
   background-color: white;
   border-radius: 10px;
-  padding: 20px;
-  padding-inline: 40px;
+  padding: 15px;
   overflow: auto;
 }
 
-#med-history-file {
+#med-history-file, #edit-med-history-file {
   display: none;
 }
 
@@ -278,10 +368,14 @@ nav {
   background-color: white;
 }
 .input-text--greenBack {
-  background-color: #e6faf0;
+  background-color: white;
+  border-color: #130d4a;
 }
 .input-text--margin-bottom {
   margin-bottom: 10px;
+}
+.input-text:focus {
+  font-size: 1.2rem;
 }
 
 .input-description {
@@ -299,6 +393,10 @@ nav {
   text-align: center;
   font-size: 0.8rem;
   color: #130d4a;
+}
+.file-input__name {
+  width: 20px;
+  height: 10px;
 }
 .file-input::after {
   margin-left: 7px;
@@ -332,10 +430,12 @@ nav {
   color: #130d4a;
   background-color: #defaf9;
   margin-top: 10px;
+  box-sizing: border-box;
 }
 .illness-card__image-container {
   width: 175px;
   height: 175px;
+  position: relative;
 }
 .illness-card__image {
   border-radius: 87px 0px 352px 0px/77px 0px 0px 0px;
@@ -344,6 +444,7 @@ nav {
   height: 100%;
   object-fit: cover;
   display: block;
+  box-sizing: border-box;
 }
 
 .full-picture {
@@ -356,10 +457,40 @@ nav {
   margin-inline-end: auto;
 }
 
+.cancel {
+  width: 0.8em;
+  height: 0.8em;
+  position: absolute;
+  font-weight: lighter;
+  font-size: 2em;
+  color: white;
+  background-color: palevioletred;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+}
+
+.cancel:after {
+  content: "X";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%) scaleX(1.2);
+  transform: translate(-50%, -50%) scaleX(1.2);
+}
+
+.pictures-container {
+  margin-top: 10px;
+  display: flex;
+}
+
 .custom-button {
   border-radius: 3px;
   padding: 5px;
   padding-inline: 12px;
+}
+.custom-button--margin_top {
+  margin-top: 15px;
 }
 .custom-button--green {
   background-color: #34eb8f;
@@ -373,6 +504,21 @@ nav {
 .custom-button--position-absolute {
   position: absolute;
   right: 15px;
+}
+.custom-button--image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding: 5px;
+  background-image: url("../images/pluc.png");
+  background-clip: content-box;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-origin: content-box;
+}
+.custom-button--transparent {
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
 }
 .custom-button:hover {
   animation: 0.3s forwards scaleText;
@@ -395,8 +541,9 @@ nav {
   align-items: flex-start;
   justify-content: space-between;
   border-radius: 5px;
-  background-color: #34eb8f;
+  background-color: #defaf9;
   padding: 15px;
+  margin-top: 5px;
 }
 .add-form--active {
   display: flex;
@@ -481,6 +628,7 @@ nav {
   width: 100%;
   border-radius: 5px;
   overflow: hidden;
+  z-index: 3;
 }
 
 .cs-selector .cs-selector-label {
@@ -500,7 +648,7 @@ nav {
 }
 
 .create-form {
-  width: 57%;
+  width: 70%;
   height: 270px;
   display: none;
   flex-direction: column;
@@ -512,6 +660,93 @@ nav {
 }
 .create-form--active {
   display: flex;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.toast {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  width: 375px;
+  background: #FFF;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /*   gap: 20px; */
+  border-radius: 12px;
+  border-left: 3px solid red;
+  overflow: hidden;
+  transform: translateX(calc(100% + 25px));
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+}
+
+.toast.active {
+  transform: translateX(0);
+  z-index: 15;
+}
+
+.toast i:first-child {
+  color: red;
+  font-size: 20px;
+}
+
+.toast-text {
+  position: relative;
+  z-index: 16;
+  margin: 0;
+  color: black;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+}
+
+.toast i:last-child {
+  color: #ccc;
+  cursor: pointer;
+  transition: 350ms;
+}
+
+.toast i:last-child:hover {
+  color: #333;
+}
+
+.event-card {
+  border-radius: 47px 1px 352px 0px/47px 0px 0px 0px;
+  position: relative;
+  padding: 10px;
+  padding-inline: 20px;
+  color: #130d4a;
+  background-color: #defaf9;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid #dddddd;
+  border-collapse: collapse;
+  color: black;
+}
+
+.table th {
+  font-size: 0.6rem;
+  font-weight: bold;
+  padding: 5px;
+  background: #efefef;
+  border: 1px solid #dddddd;
+}
+
+.table td {
+  font-size: 0.5rem;
+  border: 1px solid #dddddd;
+  padding: 5px;
 }
 
 /*# sourceMappingURL=styles.css.map */

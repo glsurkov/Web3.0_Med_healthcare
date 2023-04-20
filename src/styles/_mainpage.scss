@@ -6,9 +6,11 @@
 
 
 .header{
+  position: relative;
   width: 100%;
   color: rgb(37, 41, 94);
   text-transform: uppercase;
+  z-index: 3;
   &__container {
     padding-block: 1%;
     width: 100%;
@@ -125,6 +127,7 @@ nav{
   }
   &__button{
     position: relative;
+    z-index:3;
     background-color: $darkBlueTheme ;
     color: $white;
     text-transform: uppercase;

@@ -1,24 +1,37 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {Link} from "react-router-dom";
 
 
 //GDPR -- EURO DOC
 //152 -- ФЕДЕРАЛЬНЫЙ ЗАКОН
 
-const PatientMiniCard = ({patient}) => {
+const PatientMiniCard = ({patient, account, list}) => {
+
+    const [miniCard,setMiniCard] = useState(patient.userCard.jsonHash)
+    console.log(patient.userCard.jsonHash)
+
     return (
-        <Link to={"/card/" + patient.address} state = {{from:"patients",account:patient.address, patient:{name:patient.name,surname:patient.surname,age:patient.age}}}
+        <Link to={"/card/" + account} state = {{
+            from:list,
+            account:account,
+            patient:{
+                name:patient.userName,
+                surname:patient.userSurname,
+                age:patient.userAge,
+                role:patient.userRole,
+                card:miniCard,
+            }}}
          className='patient-mini-card patient-mini-card--margin10p'>
-                <div>
-                    <ul>
-                        <li>
-                            {patient.name}
+                <div className='patient-mini-card__content-container'>
+                    <ul className='patient-mini-card__content'>
+                        <li className='patient-mini-card__text'>
+                            Name — {patient.userName}
                         </li>
-                        <li>
-                            {patient.surname}
+                        <li className='patient-mini-card__text'>
+                            Surname — {patient.userSurname}
                         </li>
-                        <li>
-                            {patient.age}
+                        <li className='patient-mini-card__text'>
+                            Age — {patient.userAge}
                         </li>
                     </ul>
                 </div>

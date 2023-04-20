@@ -3,18 +3,38 @@
 
 .patient-mini-card{
   display: flex;
+  clip-path: polygon(4% 0%, 100% 0%, 100% 100%, 4% 100%, 0% 50%);
+  justify-content: space-between;
   background-color:$darkBlueTheme;
-  border-radius: 50px;
-  height: 20%;
+  height: 15%;
   align-items: center;
   color: $white;
   text-decoration: none;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
 
-  &--margin10p{
-    margin-block-start: 10px;
+  &__text{
+    border-right: 2px solid white;
+    padding: 10px 0;
+    padding-right: 15px ;
   }
 
-  &:nth-child(1){
-    margin: 0;
+  &__content{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    list-style-type: none;
+    padding-inline:0px ;
+  }
+  &__content-container{
+    width: 100%;
+  }
+
+  &--margin10p{
+    margin-block-start: 25px;
+  }
+
+  &:nth-child(3){
+    margin-block-start: 10px;
   }
 }

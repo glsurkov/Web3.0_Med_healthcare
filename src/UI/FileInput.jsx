@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
 
-const FileInput = ({label,onChange,name,setName}) => {
+const FileInput = ({label,onChange,name,setName,forWho}) => {
 
 
     return (
         <>
-            <label className="file-input" htmlFor="med-history-file">{label}</label>
+            <label className="file-input" htmlFor={forWho}>{label}</label>
             <input onChange={(e) => {
                 onChange(e);
                 setName(e.target.files[0].name)
-            }} id="med-history-file" type="file"/>
-            <span>{name}</span>
+            }} id={forWho} type="file" multiple = "multiple" name = "files[]"/>
+            <div>{name ? name : "NONE"}</div>
         </>
     );
 };

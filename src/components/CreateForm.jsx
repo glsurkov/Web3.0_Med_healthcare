@@ -1,12 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import Input from "../UI/Input";
 import FileInput from "../UI/FileInput";
 import Button from "../UI/Button";
+import {AuthContext} from "../context";
 
-const CreateForm = ({state}) => {
+const CreateForm = ({state,setForm,createUser,fetchUsers}) => {
+
+
+    const {userRole} = useContext(AuthContext)
 
     const defaultClass = ["create-form"]
     const [classes,setClasses] = useState(defaultClass)
+    const [input1,setInput1] = useState("")
+    const [input2,setInput2] = useState("")
+    const [input3,setInput3] = useState("")
+    const [input4,setInput4] = useState("")
+    const [input5,setInput5] = useState("USER")
+
+    useEffect(()=>{
+        setForm({
+            address:input1,
+            name:input2,
+            surname:input3,
+            age:input4,
+            role:input5
+        })
+    },[input1,input2,input3,input4,input5])
+
 
     useEffect(() => {if(state) {
         setClasses([...classes, "create-form--active"])
@@ -70,6 +90,7 @@ const CreateForm = ({state}) => {
                     e.stopPropagation();
                     cs_selected_box.childNodes[0].innerHTML = text;
                     cs_selector_DOM.setAttribute("data-active", 0);
+                    setInput5(value)
                     cs_selector_DOM.setAttribute("data-selected", value);
                 });
 
@@ -108,18 +129,18 @@ const CreateForm = ({state}) => {
         <form onClick = {(e) => {
             e.stopPropagation()
         }} id = "2" onSubmit={onSubmit} className={classes.join(' ')}>
-            <Input classes="input-text input-text--whiteBack" placeholder = "Address"/>
-            <Input classes="input-text input-text--whiteBack" placeholder = "Name"/>
-            <Input classes="input-text input-text--whiteBack" placeholder = "Surname"/>
-            <Input classes="input-text input-text--whiteBack" placeholder = "Age"/>
+            <Input value = {input1} onChange={(e) => {setInput1(e.target.value)}} classes="input-text input-text--whiteBack" placeholder = "Address"/>
+            <Input value = {input2} onChange={(e) => {setInput2(e.target.value)}} classes="input-text input-text--whiteBack" placeholder = "Name"/>
+            <Input value = {input3} onChange={(e) => {setInput3(e.target.value)}} classes="input-text input-text--whiteBack" placeholder = "Surname"/>
+            <Input value = {input4} onChange={(e) => {setInput4(e.target.value)}} classes="input-text input-text--whiteBack" placeholder = "Age"/>
             <div className="container">
-                <select>
+                <select value={input5}>
                     <option className="cs-selector-label">Choose one</option>
-                    <option value="USER">USER</option>
-                    <option value="DOCTOR">DOCTOR</option>
+                    <option value="USER" selected>USER</option>
+                    {(userRole === "DOCTOR" || userRole === "USER") ? null : <option value="DOCTOR">DOCTOR</option>}
                 </select>
             </div>
-            <Button classes = "custom-button custom-button--white" title={"Submit"} type={"submit"}/>
+            <Button onClick={async (e)=>{e.preventDefault(); await createUser();fetchUsers()}} classes = "custom-button custom-button--white" title={"Submit"} type={"submit"}/>
         </form>
     );
 };

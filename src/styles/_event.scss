@@ -1,0 +1,32 @@
+@import "variables";
+
+.event-card{
+  border-radius: 47px 1px 352px 0px / 47px 0px 0px 0px;
+  position: relative;
+  padding: 10px;
+  padding-inline: 20px;
+  color: $darkBlueTheme;
+  background-color:$lightBlueTheme;
+  margin-top:10px;
+  box-sizing: border-box;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid #dddddd;
+  border-collapse: collapse;
+  color: black;
+}
+.table th {
+  font-size: 0.6rem;
+  font-weight: bold;
+  padding: 5px;
+  background: #efefef;
+  border: 1px solid #dddddd;
+}
+.table td {
+  font-size: 0.5rem;
+  border: 1px solid #dddddd;
+  padding: 5px;
+}

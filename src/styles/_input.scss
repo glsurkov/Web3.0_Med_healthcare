@@ -1,6 +1,6 @@
 @import "variables.scss";
 
-#med-history-file{
+#med-history-file, #edit-med-history-file{
   display: none;
 }
 
@@ -15,10 +15,15 @@
   }
 
   &--greenBack{
-    background-color: $inputBackgroundGreen;
+    background-color: $white;
+    border-color:$darkBlueTheme ;
   }
   &--margin-bottom{
     margin-bottom: 10px;
+  }
+
+  &:focus{
+    font-size: 1.2rem;
   }
 
 }
@@ -38,6 +43,11 @@
   text-align: center;
   font-size: 0.8rem;
   color: $darkBlueTheme;
+
+  &__name{
+    width: 20px;
+    height: 10px;
+  }
 
   &::after{
     margin-left: 7px;

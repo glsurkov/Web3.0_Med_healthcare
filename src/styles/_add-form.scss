@@ -7,8 +7,9 @@
   align-items: flex-start;
   justify-content: space-between;
   border-radius: 5px;
-  background-color: $addButtonTheme;
+  background-color: $lightBlueTheme;
   padding: 15px;
+  margin-top: 5px;
 
   &--active{
     display: flex;

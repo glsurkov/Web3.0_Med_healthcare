@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
 import Login from "./Login";
 import PersonCard from "./PersonCard";
@@ -7,6 +7,8 @@ import '../styles/styles.css'
 import Web3 from "web3";
 import Schedule from "./Schedule";
 import {AuthContext} from "../context";
+import {CONTRACT_ABI, CONTRACT_ADDRESS} from "../contracts/contract";
+import DoctorsList from "./DoctorsList";
 
 
 const App = () => {
@@ -14,40 +16,62 @@ const App = () => {
     const [isConnected,setIsConnected] = useState(false)
     const [currentAccount, setCurrentAccount] = useState(undefined)
     const [provider,setCurrentProvider] = useState(null)
+    const [contract, setContract] = useState(undefined)
+    const [userRole, setUserRole] = useState(undefined)
+    const [defaultUser, setUser] = useState({})
 
     const defineCurrentProvider = () => {
         if(window.ethereum){
-            setCurrentProvider(window.ethereum);
-        }else if(window.web3){
-            setCurrentProvider('Привет снюс ' + window.web3.currentProvider);
+            setCurrentProvider(Web3.givenProvider);
         }else{
             console.log('Please install Metamask')
         }
     }
 
-    const onConnect = async() => {
+    const accountChangedHandler = (newAccount) =>{
+        setCurrentAccount(newAccount)
+    }
+
+    const onConnect = async () => {
         try {
-            defineCurrentProvider()
-            if(provider){
-                await provider.request({method: 'eth_requestAccounts'});
-                const web3 = new Web3(provider);
+            await defineCurrentProvider()
+            if(Web3.givenProvider){
+                const web3 = new Web3(Web3.givenProvider);
                 const userAccount = await web3.eth.getAccounts();
-                localStorage.setItem('MetaMask',userAccount[0]);
-                setCurrentAccount(userAccount[0]);
-                setIsConnected(true);
+                const controlContract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+                if(userAccount[0]){
+                    accountChangedHandler(userAccount[0])
+                }
+                if(controlContract){
+                    setContract(controlContract)
+                }
+                if(userAccount[0] === "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"){
+                    setUserRole('DOCTOR')
+                    setUser({
+                        userName:"ORGANIZATION",
+                        userSurname:"ORGANIZATION",
+                        userAge:11,
+                        userRole:"ORGANIZATION"
+                    })
+                    setIsConnected(true)
+                }else{
+                    const user = await contract.methods.getSpecificUser(userAccount[0]).call()
+                    setUser(user)
+                    setUserRole(user.userRole)
+                    if(user[0] !== ""){
+                        setIsConnected(true)
+                    }
+                }
             }
         }catch (err){
-            console.log(err)
+            console.log("Ошибка  ",err)
         }
     }
 
+    window.ethereum.on('accountsChanged', () => {setIsConnected(false);onConnect()})
+
     useEffect(() => {
-        onConnect();
-        const connection = localStorage.getItem('MetaMask');
-        if(connection){
-            setIsConnected(true);
-            setCurrentAccount(connection)
-        }
+            onConnect()
         },[])
 
 
@@ -55,7 +79,9 @@ const App = () => {
         <AuthContext.Provider value={{
             provider,
             currentAccount,
-            isConnected
+            isConnected,
+            contract,
+            userRole,
         }}>
             <BrowserRouter>
                 <Routes>
@@ -64,8 +90,15 @@ const App = () => {
                         path="/login"
                         element={ isConnected ? <Navigate to={`/card/${currentAccount}`} /> : <Login onConnect = {onConnect} isConnected = {isConnected}/>}
                     />
-                    <Route path={`/card/*`} element={<PersonCard account={currentAccount} patient = {{name:'ME',surname:"ME",age:"infinity"}}/>}/>
-                    <Route path="/patients" element={<PatientsList/>}/>
+                    <Route path={`/card/*`} element={ isConnected ? <PersonCard account={currentAccount} patient = {{
+                        name:defaultUser.userName,
+                        surname:defaultUser.userSurname,
+                        age:defaultUser.userAge,
+                        role:defaultUser.userRole,
+                        card:defaultUser.userCard
+                    }}/> : <Navigate to = "/login"/>}/>
+                    <Route path="/patients" element={ (isConnected && userRole === 'DOCTOR') ? <PatientsList/> : <Navigate to={`/card/${currentAccount}`}/>}/>
+                    <Route path="/doctors" element={(isConnected) ? <DoctorsList/> : <Navigate to = "/login"/>}/>
                     {/*<Route path="/schedule" element={<Schedule/>} />*/}
                 </Routes>
             </BrowserRouter>
