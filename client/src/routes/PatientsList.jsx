@@ -47,11 +47,7 @@ const PatientsList = () => {
             }else{
                 newCard = {
                     userAddress: form.address,
-                    illnesses: [{
-                        "diagnosis":"Flu",
-                        "description":"dsmcsmdkcsdslc,ls,c.dscdsfsdcds",
-                        "images":[]
-                    }]
+                    illnesses: []
                 }
             }
             const newCardHash = await ipfs.add(JSON.stringify(newCard))

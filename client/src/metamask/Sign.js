@@ -24,7 +24,7 @@ const Sign = async (currentAccount, provider, sender) => {
         message: {
             contents: 'Update your med card',
             from: {
-                name: 'Dr.Floyd',
+                name: 'Dr.Dirk',
                 wallets: [
                     sender,
                 ],

@@ -69,15 +69,9 @@ const AddForm = ({card,state,setIllnesses,illnesses,currentJSON,setCard,account,
             for(let i = 0; i < files.length; i++){
 
                 [encrypted, results] = await imageEncrypt(files[i], encrypted, results, secret, ipfs)
-                console.log(encrypted.length)
-                console.log(results.length)
                 // const result = await ipfs.add(encrypted[i]);
-                // console.log('Каво')
                 // results.push(result.path)
             }
-
-
-            console.log(secret)
 
             const newIllness = {
                 diagnosis: form[0].value,
@@ -86,8 +80,6 @@ const AddForm = ({card,state,setIllnesses,illnesses,currentJSON,setCard,account,
                 imageSecret: secret,
                 IlnessId: Date.now()
             }
-
-            console.log(newIllness.images)
 
             // console.log(currentJSON)
             // const newCardJSON = {
@@ -125,7 +117,6 @@ const AddForm = ({card,state,setIllnesses,illnesses,currentJSON,setCard,account,
 
             e.target.reset()
             setName('Файл не выбран')
-            console.log('submitted...')
         }
     },[secret])
 

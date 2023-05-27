@@ -135,20 +135,14 @@ const PersonCard = (props) => {
     //Функция, получающая информацию о личной карте пользователя из IPFS и смарт-контракта
 
     const getCard = async () =>{
-        console.log('GETS CARD')
-
         if(currentAccount === props.account){
             try{
                 let file;
-                console.log(hash)
                 file = await axios.get("https://skywalker.infura-ipfs.io/ipfs/" + hash)
-                console.log(file)
-                console.log(encrypted)
                 if(encrypted){
                     const secret = prompt("Write down your secret phrase to decrypt")
                     setSecret(secret)
                     const Data = await decryptText(file.data, secret)
-                    console.log(Data)
                     setCard(Data)
                     setIllnesses([...Data.illnesses])
                     return({
@@ -156,7 +150,6 @@ const PersonCard = (props) => {
                         cardHash: props.patient.card.jsonHash
                     })
                 }else{
-                    console.log(file.data)
                     setCard(file.data)
                     setIllnesses([...file.data.illnesses])
                     return({
@@ -171,7 +164,6 @@ const PersonCard = (props) => {
             const user = await contract.methods.getSpecificUser(props.account).call()
             let file;
             file = await axios.get("https://skywalker.infura-ipfs.io/ipfs/" + user.userCard.jsonHash)
-            console.log(file)
             setHash(user.userCard.jsonHash)
             const secret = prompt("Write down your secret phrase to decrypt")
             setSecret(secret)
@@ -182,30 +174,23 @@ const PersonCard = (props) => {
     }
 
     useEffect(()=>{
-        console.log('FUNC')
-
         // Функция осуществляющая шифрование
        doEncryption.current = async (phrase) => {
             try{
-                console.log(card)
                 const encryptedText = await encryptText(card, phrase)
                 const result = await ipfs.add(encryptedText);
-                console.log('Удаляем')
-                console.log(hash)
                 if(!hash){
                     const res = await axios.post(`https://ipfs.infura.io:5001/api/v0/pin/rm?arg=${props.patient.card.jsonHash}`,{},{
                         headers:{
                             Authorization: authorization,
                         }
                     })
-                    console.log(res)
                 }else {
                     const res = await axios.post(`https://ipfs.infura.io:5001/api/v0/pin/rm?arg=${hash}`, {}, {
                         headers: {
                             Authorization: authorization,
                         }
                     })
-                    console.log(res)
                 }
                 const cardix = await contract.methods.updateCard(result.path, props.account).send({from:currentAccount})
                 const encrypt = await contract.methods.encrypt("Fine").send({from:currentAccount})
@@ -217,7 +202,6 @@ const PersonCard = (props) => {
                 console.log(err)
             }
         }
-        console.log(doEncryption.current)
     }, [card,hash])
 
 
@@ -309,9 +293,7 @@ const PersonCard = (props) => {
                     const permissionWindow = window.confirm(`Doctor with address ${from} asks for your card`)
                     if(permissionWindow){
                         contract.methods.giveInformation(from, "YES", permissionId).send({from:currentAccount})
-                        console.log('Отправлено')
                         const phrase = window.prompt(`Write down new code phrase for doctor`);
-                        console.log(phrase)
                         handleEncryption(phrase)
                     }
                 }
@@ -332,7 +314,6 @@ const PersonCard = (props) => {
     }
 
     useEffect(()=>{
-        console.log('EFFECT')
         async function onLoad(){
             if(userRole === "USER"){
                 await getCard()
