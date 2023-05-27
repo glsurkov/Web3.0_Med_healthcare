@@ -1,13 +1,9 @@
 import React,{useState} from 'react';
 import {Link} from "react-router-dom";
 
-
-//GDPR -- EURO DOC
-//152 -- ФЕДЕРАЛЬНЫЙ ЗАКОН
-
 const PatientMiniCard = ({patient, account, list}) => {
 
-    const [miniCard,setMiniCard] = useState(patient.userCard.jsonHash)
+    const [miniCard,setMiniCard] = useState(patient.userCard)
     console.log(patient.userCard.jsonHash)
 
     return (

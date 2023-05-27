@@ -15,9 +15,9 @@ const Header = () => {
                 </div>
                 <nav className='nav-bar'>
                     <Link className = 'link' to={"/card/" + currentAccount}><b>My Card</b></Link>
-                    {userRole === "DOCTOR" ? <Link className = 'link' to="/patients"><b>Patients</b></Link> : null}
+                    {userRole === "DOCTOR" || userRole === "ORGANIZATION" ? <Link className = 'link' to="/patients"><b>Patients</b></Link> : null}
                     <Link className = 'link' to="/doctors/"><b>Doctors</b></Link>
-                    {/*<Link className = 'link' to='/schedule'><b>My schedule</b></Link>*/}
+                    <Link className = 'link' to="/organizations/"><b>Organizations</b></Link>
                 </nav>
             </div>
         </header>

@@ -2,6 +2,8 @@ import {recoverTypedSignature} from "@metamask/eth-sig-util";
 import { Buffer } from "buffer";
 import Web3 from "web3";
 
+//В данном файле находится логика по подписи сообщения при помощи ключей, хранящихся в MetaMask
+//(по итогу не пригодилось, но решил оставить для возможного в дальнейшем расширения функционала)
 
 window.Buffer = window.Buffer || Buffer;
 

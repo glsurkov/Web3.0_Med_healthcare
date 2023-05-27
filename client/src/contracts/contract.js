@@ -23,7 +23,50 @@ export const CONTRACT_ABI = [
             {
                 "indexed": true,
                 "internalType": "address",
-                "name": "userAddress",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "permissionId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "surname",
+                "type": "string"
+            },
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "when",
+                "type": "uint256"
+            }
+        ],
+        "name": "AskForPermission",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "from",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "to",
                 "type": "address"
             },
             {
@@ -40,6 +83,56 @@ export const CONTRACT_ABI = [
             }
         ],
         "name": "CardUpdated",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "from",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "permissionId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "when",
+                "type": "uint256"
+            }
+        ],
+        "name": "DoctorUpdate",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "from",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "message",
+                "type": "string"
+            }
+        ],
+        "name": "Encrypted",
         "type": "event"
     },
     {
@@ -73,6 +166,37 @@ export const CONTRACT_ABI = [
             {
                 "indexed": true,
                 "internalType": "address",
+                "name": "from",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "permissionId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "when",
+                "type": "uint256"
+            }
+        ],
+        "name": "GiveInformation",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
                 "name": "previousOwner",
                 "type": "address"
             },
@@ -84,6 +208,43 @@ export const CONTRACT_ABI = [
             }
         ],
         "name": "OwnershipTransferred",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "from",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "permissionId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "message",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "when",
+                "type": "uint256"
+            }
+        ],
+        "name": "RejectPermission",
         "type": "event"
     },
     {
@@ -199,6 +360,11 @@ export const CONTRACT_ABI = [
                         "internalType": "uint256",
                         "name": "lastUpdate",
                         "type": "uint256"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "encrypted",
+                        "type": "bool"
                     }
                 ],
                 "indexed": false,
@@ -285,6 +451,19 @@ export const CONTRACT_ABI = [
     },
     {
         "inputs": [],
+        "name": "ORGANIZATION_ROLE",
+        "outputs": [
+            {
+                "internalType": "bytes32",
+                "name": "",
+                "type": "bytes32"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "USER_ROLE",
         "outputs": [
             {
@@ -334,6 +513,11 @@ export const CONTRACT_ABI = [
                         "internalType": "uint256",
                         "name": "lastUpdate",
                         "type": "uint256"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "encrypted",
+                        "type": "bool"
                     }
                 ],
                 "internalType": "struct Control.Card",
@@ -349,12 +533,56 @@ export const CONTRACT_ABI = [
     {
         "inputs": [
             {
+                "internalType": "address",
+                "name": "_userAddress",
+                "type": "address"
+            }
+        ],
+        "name": "askPermission",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
                 "internalType": "bool",
                 "name": "_status",
                 "type": "bool"
             }
         ],
         "name": "changeStatus",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_userAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "permissionId",
+                "type": "uint256"
+            }
+        ],
+        "name": "doctorUpdate",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "message",
+                "type": "string"
+            }
+        ],
+        "name": "encrypt",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -419,6 +647,78 @@ export const CONTRACT_ABI = [
                                 "internalType": "uint256",
                                 "name": "lastUpdate",
                                 "type": "uint256"
+                            },
+                            {
+                                "internalType": "bool",
+                                "name": "encrypted",
+                                "type": "bool"
+                            }
+                        ],
+                        "internalType": "struct Control.Card",
+                        "name": "userCard",
+                        "type": "tuple"
+                    }
+                ],
+                "internalType": "struct Control.UserStruct[]",
+                "name": "",
+                "type": "tuple[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getFullOrgs",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "userName",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "userSurname",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint128",
+                        "name": "userAge",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "userSince",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "userIndex",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "userRole",
+                        "type": "string"
+                    },
+                    {
+                        "components": [
+                            {
+                                "internalType": "string",
+                                "name": "jsonHash",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "lastUpdate",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "bool",
+                                "name": "encrypted",
+                                "type": "bool"
                             }
                         ],
                         "internalType": "struct Control.Card",
@@ -481,6 +781,11 @@ export const CONTRACT_ABI = [
                                 "internalType": "uint256",
                                 "name": "lastUpdate",
                                 "type": "uint256"
+                            },
+                            {
+                                "internalType": "bool",
+                                "name": "encrypted",
+                                "type": "bool"
                             }
                         ],
                         "internalType": "struct Control.Card",
@@ -525,6 +830,19 @@ export const CONTRACT_ABI = [
     {
         "inputs": [],
         "name": "getOnlyDoctors",
+        "outputs": [
+            {
+                "internalType": "address[]",
+                "name": "",
+                "type": "address[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getOnlyOrgs",
         "outputs": [
             {
                 "internalType": "address[]",
@@ -643,6 +961,11 @@ export const CONTRACT_ABI = [
                                 "internalType": "uint256",
                                 "name": "lastUpdate",
                                 "type": "uint256"
+                            },
+                            {
+                                "internalType": "bool",
+                                "name": "encrypted",
+                                "type": "bool"
                             }
                         ],
                         "internalType": "struct Control.Card",
@@ -656,6 +979,29 @@ export const CONTRACT_ABI = [
             }
         ],
         "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_userAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "typeOfAnswer",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "index",
+                "type": "uint256"
+            }
+        ],
+        "name": "giveInformation",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -804,14 +1150,14 @@ export const CONTRACT_ABI = [
     {
         "inputs": [
             {
-                "internalType": "address",
-                "name": "_userAddress",
-                "type": "address"
-            },
-            {
                 "internalType": "string",
                 "name": "_jsonHash",
                 "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
             }
         ],
         "name": "updateCard",

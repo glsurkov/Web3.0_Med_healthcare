@@ -5,6 +5,8 @@ import CreateForm from "../components/CreateForm";
 import PatientMiniCard from "../components/PatientMiniCard";
 import {AuthContext} from "../context";
 
+//Компонент, представляющий список докторов системы
+
 const DoctorsList = () => {
 
     const {contract,currentAccount} = useContext(AuthContext)
@@ -16,13 +18,13 @@ const DoctorsList = () => {
         fetchDoctors()
     },[])
 
+    //Функция, получающая список докторов из смарт-контракта
+    //(вызыватеся при первом рендере в useEffect)
 
     const fetchDoctors = async () =>{
         try{
-            const doctors = await contract.methods.getFullDoctors().call()
-            const accounts = await contract.methods.getOnlyDoctors().call()
-            // console.log(accounts)
-            // console.log(users)
+            const doctors = await contract.methods.getFullDoctors().call({from: currentAccount})
+            const accounts = await contract.methods.getOnlyDoctors().call({from: currentAccount})
             setDoctors([...doctors])
             setAccounts([...accounts])
         }catch (err){
@@ -34,9 +36,6 @@ const DoctorsList = () => {
         <>
             <Header/>
             <main className='menu-patients'>
-                {/*<div>*/}
-                {/*    <Link className="back" to="/"> Back </Link>*/}
-                {/*</div>*/}
                 {doctors.map((doctor,index) =>
                     <PatientMiniCard key = {doctorsAccounts[index]} patient = {doctor} account = {doctorsAccounts[index]} list = {"/doctors"}/>
                 )}

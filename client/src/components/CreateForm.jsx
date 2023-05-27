@@ -7,7 +7,7 @@ import {AuthContext} from "../context";
 const CreateForm = ({state,setForm,createUser,fetchUsers}) => {
 
 
-    const {userRole} = useContext(AuthContext)
+    const {userRole, currentAccount} = useContext(AuthContext)
 
     const defaultClass = ["create-form"]
     const [classes,setClasses] = useState(defaultClass)
@@ -18,13 +18,16 @@ const CreateForm = ({state,setForm,createUser,fetchUsers}) => {
     const [input5,setInput5] = useState("USER")
 
     useEffect(()=>{
-        setForm({
-            address:input1,
-            name:input2,
-            surname:input3,
-            age:input4,
-            role:input5
-        })
+        if(input4 === ""){
+            setInput4(0)
+        }
+            setForm({
+                address:input1,
+                name:input2,
+                surname:input3,
+                age:input4,
+                role:input5
+            })
     },[input1,input2,input3,input4,input5])
 
 
@@ -129,15 +132,27 @@ const CreateForm = ({state,setForm,createUser,fetchUsers}) => {
         <form onClick = {(e) => {
             e.stopPropagation()
         }} id = "2" onSubmit={onSubmit} className={classes.join(' ')}>
-            <Input value = {input1} onChange={(e) => {setInput1(e.target.value)}} classes="input-text input-text--whiteBack" placeholder = "Address"/>
-            <Input value = {input2} onChange={(e) => {setInput2(e.target.value)}} classes="input-text input-text--whiteBack" placeholder = "Name"/>
-            <Input value = {input3} onChange={(e) => {setInput3(e.target.value)}} classes="input-text input-text--whiteBack" placeholder = "Surname"/>
-            <Input value = {input4} onChange={(e) => {setInput4(e.target.value)}} classes="input-text input-text--whiteBack" placeholder = "Age"/>
+            {input5 === "DOCTOR" || input5 === "USER"
+                ?
+                <>
+                    <Input value = {input1} onChange={(e) => {setInput1(e.target.value)}} classes="input-text input-text--whiteBack" placeholder = "Address"/>
+                    <Input value = {input2} onChange={(e) => {setInput2(e.target.value)}} classes="input-text input-text--whiteBack" placeholder = "Name"/>
+                    <Input value = {input3} onChange={(e) => {setInput3(e.target.value)}} classes="input-text input-text--whiteBack" placeholder = "Surname"/>
+                    <Input value = {input4} onChange={(e) => {setInput4(e.target.value)}} classes="input-text input-text--whiteBack" placeholder = "Age"/>
+                </>
+                :
+                <>
+                    <Input value = {input1} onChange={(e) => {setInput1(e.target.value)}} classes="input-text input-text--whiteBack" placeholder = "Address"/>
+                    <Input value = {input2} onChange={(e) => {setInput2(e.target.value)}} classes="input-text input-text--whiteBack" placeholder = "Organization name"/>
+                </>
+
+            }
             <div className="container">
                 <select value={input5}>
                     <option className="cs-selector-label">Choose one</option>
                     <option value="USER" selected>USER</option>
-                    {(userRole === "DOCTOR" || userRole === "USER") ? null : <option value="DOCTOR">DOCTOR</option>}
+                    {(userRole !== "ORGANIZATION") ? null : <option value="DOCTOR">DOCTOR</option>}
+                    {(currentAccount !== process.env.REACT_APP_OWNER_ACCOUNT) ? null : <option value="ORGANIZATION">ORGANIZATION</option>}
                 </select>
             </div>
             <Button onClick={async (e)=>{e.preventDefault(); await createUser();fetchUsers()}} classes = "custom-button custom-button--white" title={"Submit"} type={"submit"}/>

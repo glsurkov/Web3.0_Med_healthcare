@@ -3,6 +3,8 @@ import Notification from "../UI/Notification";
 import {useState, useContext} from "react";
 import {AuthContext} from "../context";
 
+//Компонент, обслуживающий процесс входа в систему
+
 function Login({onConnect,isConnected}) {
 
     const {defaultUser} = useContext(AuthContext)

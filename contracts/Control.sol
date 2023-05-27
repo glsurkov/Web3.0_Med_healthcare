@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
+import "hardhat/console.sol";
 
 contract Control is Ownable, AccessControl{
 
@@ -11,15 +12,19 @@ contract Control is Ownable, AccessControl{
 
     uint balanceOfContract;
     mapping (address => UserStruct) private usersAll;
+    address[] private organizationAccounts;
     address[] private userAccounts;
     address[] private doctorAccounts;
     OwnerStruct private ownerdetails;
     uint private indexUser;
     uint private indexDoctor;
+    uint private indexOrganization;
     uint private indexCard;
+    uint private indexPermission;
     bool private status;
     bytes32 public constant USER_ROLE = keccak256("USER_ROLE");
     bytes32 public constant DOCTOR_ROLE = keccak256("DOCTOR_ROLE");
+    bytes32 public constant ORGANIZATION_ROLE = keccak256("ORGANIZATION_ROLE");
 
     //----Structs
 
@@ -43,14 +48,20 @@ contract Control is Ownable, AccessControl{
     struct Card{
         string jsonHash;
         uint lastUpdate;
+        bool encrypted;
     }
 
     //----Events
 
     event UserAdded(address indexed from, address userAddress, string userName, string userSurname, Card userCard, string userRole, uint256 timestamp);
     event UserRemoved(address indexed from, address userAddress, string userName, string userSurname);
-    event CardUpdated(address from, address indexed userAddress, string previousHash, string newHash);
+    event CardUpdated(address indexed from, address indexed to, string previousHash, string newHash);
+    event AskForPermission(address from, address indexed to, uint permissionId, string name, string surname, uint indexed when);
+    event RejectPermission(address from, address to, uint indexed permissionId, string message, uint when);
+    event GiveInformation(address indexed from, address indexed to, uint indexed permissionId, uint when);
+//    event DoctorUpdate(address from, address to, uint permissionId, uint when);
     event Error(address from, address contractAddress, string cause);
+    event Encrypted(address from, string message);
 
     //----Constructor of smart-contract
 
@@ -62,7 +73,7 @@ contract Control is Ownable, AccessControl{
         indexDoctor = 0;
         status = true;
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _setupRole(DOCTOR_ROLE, msg.sender);
+        _setupRole(ORGANIZATION_ROLE, msg.sender);
     }
 
     //----Handling empty or invalid transactions
@@ -83,6 +94,33 @@ contract Control is Ownable, AccessControl{
         _;
     }
 
+    modifier onlyRoles2(bytes32[2] memory roles) {
+
+        bool flag;
+        flag = false;
+
+        for(uint i = 0; i < roles.length; i++){
+            if(hasRole(roles[i],msg.sender) == true){
+                flag = true;
+            }
+        }
+        require(flag == true, "Account doesn't have any of these roles");
+        _;
+    }
+
+    modifier onlyRoles3(bytes32[3] memory roles) {
+
+        bool flag;
+        flag = false;
+
+        for(uint i = 0; i < roles.length; i++){
+            if(hasRole(roles[i],msg.sender) == true){
+                flag = true;
+            }
+        }
+        require(flag == true, "Account doesn't have any of these roles");
+        _;
+    }
 
     //----Utility functions
 
@@ -94,6 +132,8 @@ contract Control is Ownable, AccessControl{
         }
         return keccak256(abi.encodePacked(str1)) == keccak256(abi.encodePacked(str2));
     }
+
+    //------Function to concatenate two arrays
 
     function ConcatenateArrays(address[] memory Accounts, address[] memory Accounts2) internal pure returns(address[] memory) {
 
@@ -114,10 +154,12 @@ contract Control is Ownable, AccessControl{
 
     //----Functions that are called with "transaction"
 
-    function addUser(address _userAddress, string memory _userName, string memory _userSurname, uint128 _userAge, string memory _userRole, Card memory _userCard) public onlyRole(DOCTOR_ROLE) contractActive{
+
+    //----Add user function
+
+    function addUser(address _userAddress, string memory _userName, string memory _userSurname, uint128 _userAge, string memory _userRole, Card memory _userCard) public onlyRoles2([DOCTOR_ROLE, ORGANIZATION_ROLE]) contractActive{
 
         require(usersAll[_userAddress].userSince == 0, "User already exists");
-
 
         if(compare(_userRole,"USER")){
             usersAll[_userAddress] = UserStruct({
@@ -132,7 +174,7 @@ contract Control is Ownable, AccessControl{
             userAccounts.push(_userAddress);
             indexUser++;
             _setupRole(USER_ROLE, _userAddress);
-        }else{
+        }else if(compare(_userRole, "DOCTOR")){
             usersAll[_userAddress] = UserStruct({
             userName: _userName,
             userSurname: _userSurname,
@@ -145,10 +187,24 @@ contract Control is Ownable, AccessControl{
             doctorAccounts.push(_userAddress);
             indexDoctor++;
             _setupRole(DOCTOR_ROLE, _userAddress);
+        }else{
+            usersAll[_userAddress] = UserStruct({
+            userName: _userName,
+            userSurname: _userSurname,
+            userAge: _userAge,
+            userIndex: indexOrganization,
+            userRole: _userRole,
+            userSince: block.timestamp,
+            userCard: _userCard
+            });
+            organizationAccounts.push(_userAddress);
+            indexOrganization++;
+            _setupRole(ORGANIZATION_ROLE, _userAddress);
         }
 
         emit UserAdded(msg.sender, _userAddress, _userName, _userSurname,_userCard, _userRole, block.timestamp);
     }
+
 
     function removeUser(address _userAddress) public onlyOwner contractActive{
 
@@ -180,12 +236,52 @@ contract Control is Ownable, AccessControl{
         emit UserRemoved(msg.sender, _userAddress, usersAll[_userAddress].userName, usersAll[_userAddress].userSurname);
     }
 
+    function askPermission(address _userAddress) public contractActive onlyRole(DOCTOR_ROLE){
 
-    function updateCard(address _userAddress, string memory _jsonHash) public contractActive onlyRole(DOCTOR_ROLE){
+        indexPermission++;
 
-        emit CardUpdated(msg.sender, _userAddress, usersAll[_userAddress].userCard.jsonHash, _jsonHash);
+        emit AskForPermission(msg.sender, _userAddress, indexPermission, usersAll[msg.sender].userName, usersAll[msg.sender].userSurname, block.timestamp);
+    }
 
-        usersAll[_userAddress].userCard.jsonHash = _jsonHash;
+    function giveInformation(address _userAddress, string memory typeOfAnswer, uint index) public contractActive onlyRole(USER_ROLE){
+
+
+        if(compare(typeOfAnswer, "YES")){
+
+            emit GiveInformation(msg.sender, _userAddress, index, block.timestamp);
+            console.log('YES');
+
+        }else{
+
+            emit RejectPermission(msg.sender, _userAddress, index, "Rejected", block.timestamp);
+            console.log('NO');
+
+        }
+
+    }
+
+    //DoctorUpdate event can be useful in future
+
+//    function doctorUpdate(address _userAddress, uint permissionId) public contractActive onlyRole(DOCTOR_ROLE){
+//
+//        emit DoctorUpdate(msg.sender, _userAddress, permissionId, block.timestamp);
+//
+//    }
+
+
+    function updateCard(string memory _jsonHash, address to) public contractActive onlyRoles2([USER_ROLE,DOCTOR_ROLE]) {
+
+        emit CardUpdated(msg.sender,to,usersAll[msg.sender].userCard.jsonHash, _jsonHash);
+
+        usersAll[to].userCard.jsonHash = _jsonHash;
+    }
+
+    function encrypt(string memory message) public contractActive onlyRoles2([USER_ROLE,DOCTOR_ROLE]) {
+
+        emit Encrypted(msg.sender, message);
+
+        usersAll[msg.sender].userCard.encrypted = true;
+
     }
 
 
@@ -198,11 +294,11 @@ contract Control is Ownable, AccessControl{
         return(ownerdetails.ownerAddress, ownerdetails.organizationName, ownerdetails.dateCreated);
     }
 
-    function getAllUsers() public onlyRole(DOCTOR_ROLE) view returns (address[] memory){
+    function getAllUsers() public onlyRoles2([DOCTOR_ROLE, ORGANIZATION_ROLE]) view returns (address[] memory){
         return ConcatenateArrays(userAccounts, doctorAccounts);
     }
 
-    function getFullUsers() public onlyRole(DOCTOR_ROLE) view returns (UserStruct[] memory){
+    function getFullUsers() public onlyRoles2([DOCTOR_ROLE, ORGANIZATION_ROLE]) view returns (UserStruct[] memory){
 
         UserStruct[] memory users = new UserStruct[](userAccounts.length);
 
@@ -213,7 +309,7 @@ contract Control is Ownable, AccessControl{
         return users;
     }
 
-    function getFullDoctors() public view returns (UserStruct[] memory){
+    function getFullDoctors() public onlyRoles3([USER_ROLE,DOCTOR_ROLE,ORGANIZATION_ROLE]) view returns (UserStruct[] memory){
 
         UserStruct[] memory doctors = new UserStruct[](doctorAccounts.length);
 
@@ -224,23 +320,38 @@ contract Control is Ownable, AccessControl{
         return doctors;
     }
 
-    function getSpecificUser(address userAddress) public onlyRole(DOCTOR_ROLE) view returns (UserStruct memory){
+    function getFullOrgs() public onlyRoles3([USER_ROLE, DOCTOR_ROLE, ORGANIZATION_ROLE]) view returns (UserStruct[] memory){
+
+        UserStruct[] memory orgs = new UserStruct[](organizationAccounts.length);
+
+        for (uint i = 0; i< organizationAccounts.length; i++){
+            orgs[i] = usersAll[organizationAccounts[i]];
+        }
+
+        return orgs;
+    }
+
+    function getSpecificUser(address userAddress) public onlyRoles2([DOCTOR_ROLE, ORGANIZATION_ROLE]) view returns (UserStruct memory){
         return usersAll[userAddress];
     }
 
-    function getOnlyUsers() public onlyRole(DOCTOR_ROLE) view returns (address[] memory){
+    function getOnlyUsers() public onlyRoles2([DOCTOR_ROLE, ORGANIZATION_ROLE]) view returns (address[] memory){
         return userAccounts;
     }
 
-    function getOnlyDoctors() public view returns (address[] memory){
+    function getOnlyDoctors() public onlyRoles3([DOCTOR_ROLE, USER_ROLE, ORGANIZATION_ROLE]) view returns (address[] memory){
         return doctorAccounts;
     }
 
-    function getNoOfUsers() public onlyRole(DOCTOR_ROLE) view returns (uint){
+    function getOnlyOrgs() public onlyRoles3([DOCTOR_ROLE, USER_ROLE, ORGANIZATION_ROLE]) view returns (address[] memory){
+        return organizationAccounts;
+    }
+
+    function getNoOfUsers() public onlyRoles2([DOCTOR_ROLE, ORGANIZATION_ROLE]) view returns (uint){
         return userAccounts.length;
     }
 
-    function getNoOfDoctors() public view returns (uint){
+    function getNoOfDoctors() public onlyRoles3([DOCTOR_ROLE, USER_ROLE, ORGANIZATION_ROLE]) view returns (uint){
         return doctorAccounts.length;
     }
 }

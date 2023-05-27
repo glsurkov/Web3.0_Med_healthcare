@@ -7,7 +7,11 @@ import {AuthContext} from "../context";
 import {create as ipfsHttpClient} from "ipfs-http-client";
 import authorization from "../keys";
 
+//Компонент представляющий список пациентов
+
 const PatientsList = () => {
+
+    //Клиент IPFS
 
     const ipfs = ipfsHttpClient({
         url: "https://ipfs.infura.io:5001",
@@ -23,38 +27,54 @@ const PatientsList = () => {
     const [createForm, setCreateForm] = useState(false)
     const [form, setForm] = useState(undefined)
     const when = Date.now()
+    const encrypted = false
 
     useEffect(() => {
         fetchUsers()
     },[])
 
+
+    //Функция создания пользователя
+
     const createUser = async () =>{
         try{
-            const newCard = {
-                userAddress: form.address,
-                illnesses: []
+            let newCard
+            if(form.role === "ORGANIZATION"){
+                newCard = {
+                    userAddress: form.address,
+                    illnesses: []
+                }
+            }else{
+                newCard = {
+                    userAddress: form.address,
+                    illnesses: [{
+                        "diagnosis":"Flu",
+                        "description":"dsmcsmdkcsdslc,ls,c.dscdsfsdcds",
+                        "images":[]
+                    }]
+                }
             }
             const newCardHash = await ipfs.add(JSON.stringify(newCard))
-            console.log(newCardHash)
-            const user = await contract.methods.addUser(form.address,form.name,form.surname,form.age,form.role,[newCardHash.path,when]).send({from:currentAccount})
-            console.log(user)
+            const user = await contract.methods.addUser(form.address,form.name,form.surname,form.age,form.role,[newCardHash.path,when,encrypted]).send({from:currentAccount})
         }catch (err){
             console.log(err)
         }
     }
 
+    //Функция, получающая список организаций из смарт-контракта
+
     const fetchUsers = async () =>{
         try{
-            const users = await contract.methods.getFullUsers().call()
-            const accounts = await contract.methods.getOnlyUsers().call()
-            // console.log(accounts)
-            // console.log(users)
+            const users = await contract.methods.getFullUsers().call({from: currentAccount})
+            const accounts = await contract.methods.getOnlyUsers().call({from: currentAccount})
             setPatients([...users])
             setAccounts([...accounts])
         }catch (err){
             console.log(err)
         }
     }
+
+    //Handler, активирующий форму создания
 
     const activeCreateForm = (e) =>{
         if(!createForm){
@@ -72,9 +92,6 @@ const PatientsList = () => {
             <main className='menu-patients' onClick={() => {
                 setCreateForm(false)
             }}>
-                {/*<div>*/}
-                {/*    <Link className="back" to="/"> Back </Link>*/}
-                {/*</div>*/}
                 <Button classes={"custom-button custom-button--margin_top custom-button--image custom-button--transparent" } onClick={activeCreateForm} title={""}/>
                 <CreateForm createUser = {createUser} fetchUsers = {fetchUsers} setForm = {setForm} state = {createForm}/>
                 {patients.map((patient,index) =>

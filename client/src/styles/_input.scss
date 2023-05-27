@@ -14,6 +14,10 @@
     background-color: $white;
   }
 
+  &--bottomBorder{
+    border-bottom: 2px solid $darkBlueTheme;
+  }
+
   &--greenBack{
     background-color: $white;
     border-color:$darkBlueTheme ;

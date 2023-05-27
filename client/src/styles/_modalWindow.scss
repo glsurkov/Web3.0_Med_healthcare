@@ -17,6 +17,9 @@
   }
 
   &__content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     max-width: 95%;
     min-width: 60%;
     min-height: 80%;
