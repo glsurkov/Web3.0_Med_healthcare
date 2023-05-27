@@ -1,4 +1,4 @@
-#Front-end application
+# Front-end application
 Before launching the application you should provide .env file in `client` folder like this:
 ```
 REACT_APP_PROJECT_ID=2NuoeGKtYPrZDOGlOEAKYe6RLmk
